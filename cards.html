@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>Cards</title>
+    
+    <style>
+        header{
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid;
+            border-color: black;
+            height: 75px;
+            top: 0;
+            left: 0;
+            right: 0;
+            font-size: 50px;
+            /*max-width: max-content; margin-left: auto; margin-right: auto;*/
+        }
+        .start {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid;
+            border-color: black;
+            height: 40px;
+            top: 80px;
+            left: 0;
+            right: 0;
+        }
+        .comphand{
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /*border: 2px solid;*/
+            /*border-color: black;*/
+            height: 150px;
+            top: 130px;
+            left: 0;
+            right: 0;
+            font-size: 50px;
+            background-color: yellow;
+        }
+        .field {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid;
+            border-color: black;
+            height: 150px;
+            top: 280px;
+            left: 0;
+            right: 0;
+            font-size: 50px;
+        }
+        .hand {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid;
+            border-color: black;
+            height: 200px;
+            top: 450px;
+            left: 0;
+            right: 0;
+            font-size: 50px;
+        }
+        
+        .compcard {
+            height: max-height;
+            width: 100px;
+            border: 2px solid;
+        }
+    </style>
+</head>
+
+<body>    
+    <header>Matching Game</header>
+
+    <div class="start">
+        <button class="startbtn" onclick="startFn()">Start Game!</button>
+    </div>
+
+    <div class="comphand">
+        <button id="compcard1">hello</button> <button id="compcard">hello</button> <button id="compcard">hello</button> <button id="compcard">hello</button>
+    </div>
+    
+    <div class="field">
+        <div class="fieldcard"></div> <div class="fieldcard"></div> <div class="fieldcard"></div> <div class="fieldcard"></div>
+    </div>
+    
+    <div class="hand">hand</div>
+
+    <script type="text/javascript" src="C:\Users\17173\Documents\GitHub\JS PROJECTS\CommonCards.js"></script>
+    <script>
+        function startFn(){
+            // document.getElementById("compcard1").innerHTML = "howdy";
+            const card1 = new CommonCards(1);
+            // document.getElementById("compcard1").innerHTML = "howdy";
+            card1.initialize_playing_cards();
+            //card1.deal_initial();
+            document.getElementById("compcard1").innerHTML = "howdy";
+        }
+
+        // document.getElementById("compcard1").onclick = function () {
+        //     var div = document.createElement('div');
+        //     div.style.backgroundColor = "black";
+        //     div.style.position = "absolute";
+        //     div.style.left = "50px";
+        //     div.style.top = "50px";
+        //     div.style.height = "10px";
+        //     div.style.width = "10px";
+        //     document.getElementsByTagName('body')[0].appendChild(div);
+        // };
+    </script>
+    
+    
+    
+</body>
+
+</html>
