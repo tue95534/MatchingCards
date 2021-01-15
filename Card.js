@@ -7,8 +7,11 @@ class Card {
     }
 
     assignRank(value) {
-        if (value < 11) {
+        if (value < 11 && value > 1) {
             this.rank = value.toString();
+        }
+        else if (value == 1) {
+            this.rank = "A";
         }
         else {
             if (value == 11) {

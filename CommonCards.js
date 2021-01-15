@@ -56,7 +56,7 @@ class CommonCards {
             this.list_cards.push(card);
         }
         for (var x = 1; x < 14; x++) {
-            var card = new Card(x, 'H');
+            var card = new Card(x, 'D');
             this.list_cards.push(card);
         }
         this.shuffleArray(this.list_cards);

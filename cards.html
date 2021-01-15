@@ -7,15 +7,14 @@
     
     <style>
         header{
-            position: absolute;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            /* border: 2px solid; */
-            border-color: black;
             height: 75px;
             top: 0;
+            min-width: max-content;
             left: 0;
             right: 0;
             font-size: 50px;
@@ -41,6 +40,10 @@
             right: 0;
         }
 
+        .startbtn:hover {
+            transform: scale(1.2,1.2);
+        }
+
         .startbtn {
             width: 150px;
             height: 45px;
@@ -63,12 +66,10 @@
             border-radius: 20px;
             height: 150px;
             top: 150px;
-            left: 125px;
-            right: 125px;
+            left: 150px;
+            right: 150px;
             font-size: 80px;
             background-color: transparent;
-            border: 10px solid transparent;
-            border-image-source: url(C:\Users\17173\Desktop\heart.png);
         }
 
         .field {
@@ -82,8 +83,8 @@
             border-radius: 20px;
             height: 150px;
             top: 330px;
-            left: 125px;
-            right: 125px;
+            left: 150px;
+            right: 150px;
             font-size: 50px;
             background-color: transparent;
         }
@@ -99,10 +100,35 @@
             border-radius: 20px;
             height: 150px;
             top: 510px;
-            left: 125px;
-            right: 125px;
+            left: 150px;
+            right: 150px;
             font-size: 50px;
             background-color: transparent;
+        }
+
+        .sidelabel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 10px solid;
+            border-color: white;
+            border-radius: 20px;
+            height: 510px;
+            width: 100px;
+            top: 150px;
+            left: auto;
+            right: auto;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .label {
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
 
         .handc {
@@ -138,6 +164,7 @@
         .straight {
             max-width: 100%;
             max-height: 100%;
+            text-shadow: teal 3px;
         }
 
         .tilt {
@@ -145,21 +172,27 @@
             max-height: 100%;
             transform: skewX(55deg);
             transform: rotateX(55deg);
+            border-bottom: 7px solid;
         }
 
         .smaller {
             max-width: 100%;
             max-height: 100%;
+            box-shadow: 5px 5px 5px black;
+            border: 2px solid white;
         }
 
         body {
-            background-image: radial-gradient(red, orange, black);
-            background-repeat: no-repeat;
             height: 100%;
+            position: relative;
         }
 
         html {
-            height: 100%;
+            position: fixed;
+            min-height: 100%;
+            min-width: 100%;
+            background-image: radial-gradient(red, orange, black);
+            background-repeat: no-repeat;
         }
 
         img {
@@ -191,6 +224,10 @@
     
     <div class="hand" id="hand">
         <!-- <button id="humancard1" class="handc">hello</button> <button id="humancard2" class="handc">hello</button> <button id="humancard3" class="handc">hello</button> <button id="humancard4" class="handc">hello</button> -->
+    </div>
+
+    <div class="sidelabel">
+        <div class="label">Computer's Hand</div> <div class="label">Field</div> <div class="label">Hand</div>
     </div>
 
     <script type="text/javascript" src="C:\Users\17173\Documents\GitHub\JS PROJECTS\MatchingCards\CommonCards.js"></script>
@@ -250,7 +287,7 @@
             var rank = card.rank;
             var suit = card.suit;
             var btnStart = "<button id=\"" + cardnum + "\" class=\"compc\" onclick=\"testt\">";
-            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
+            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/CARDBACK.png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
             var btnEnd = "</button> ";
             var fullUrl = btnStart + thePath + btnEnd;
             console.log(fullUrl);
