@@ -12,7 +12,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid;
+            /* border: 2px solid; */
             border-color: black;
             height: 75px;
             top: 0;
@@ -20,15 +20,20 @@
             right: 0;
             font-size: 50px;
             background-color: transparent;
-            /*max-width: max-content; margin-left: auto; margin-right: auto;*/
+            text-shadow: 1px 1px 0px red, 
+                  2px 2px 0px blue, 
+                  3px 3px 0px yellow, 
+                  4px 4px 0px purple, 
+                  5px 5px 0px orange;
         }
+
         .start {
             position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid;
+            /* border: 2px solid; */
             border-color: black;
             height: 40px;
             top: 80px;
@@ -53,90 +58,118 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            /*border: 2px solid;*/
-            /*border-color: black;*/
+            border: 10px solid;
+            border-color: white;
+            border-radius: 20px;
             height: 150px;
             top: 150px;
-            left: 0;
-            right: 0;
-            font-size: 50px;
+            left: 125px;
+            right: 125px;
+            font-size: 80px;
             background-color: transparent;
+            border: 10px solid transparent;
+            border-image-source: url(C:\Users\17173\Desktop\heart.png);
         }
+
         .field {
             position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid;
-            border-color: black;
-            height: 200px;
+            border: 10px solid;
+            border-color: white;
+            border-radius: 20px;
+            height: 150px;
             top: 330px;
-            left: 0;
-            right: 0;
+            left: 125px;
+            right: 125px;
             font-size: 50px;
             background-color: transparent;
         }
+        
         .hand {
             position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid;
-            border-color: black;
-            height: 200px;
-            top: 540px;
-            left: 0;
-            right: 0;
+            border: 10px solid;
+            border-color: white;
+            border-radius: 20px;
+            height: 150px;
+            top: 510px;
+            left: 125px;
+            right: 125px;
             font-size: 50px;
             background-color: transparent;
         }
-        
-        .compcard {
-            height: max-height;
-            width: 100px;
-            border: 2px solid;
-        }
 
         .handc {
-            height: 200px;
-            width: 125px;
-            /* align-items: center;
-            text-align: center; */
+            height: 150px;
+            width: 110px;
             align-content: center;
             background-color: transparent;
+            padding: 0;
+            margin: 10px;
+            border: transparent;
+        }
+
+        .fieldc {
+            height: 125px;
+            width: 110px;
+            align-content: center;
+            background-color: transparent;
+            padding: 0;
+            margin: 10px;
+            border: transparent;
+        }
+
+        .compc {
+            height: 100px;
+            width: 75px;
+            align-content: center;
+            background-color: transparent;
+            padding: 0;
+            margin: 10px;
+            border: transparent;
         }
 
         .straight {
-            max-width: 80%;
-            max-height: 80%;
-            margin-left: 10px;
-            margin-right: 10px;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         .tilt {
             max-width: 100%;
             max-height: 100%;
-            /* -ms-transform: skewX(20deg); IE 9 */
             transform: skewX(55deg);
             transform: rotateX(55deg);
         }
 
         .smaller {
-            max-width: 60%;
-            max-height: 60%;
-            margin-left: 10px;
-            margin-right: 10px;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         body {
-            background-image: linear-gradient(darkblue, white);
+            background-image: radial-gradient(red, orange, black);
             background-repeat: no-repeat;
             height: 100%;
         }
+
         html {
             height: 100%;
+        }
+
+        img {
+            border: transparent;
+        }
+
+        img:hover {
+            border: 6px solid;
+            border-color: white;
+            transition: border-color 1s;
         }
     </style>
 </head>
@@ -203,7 +236,7 @@
             var value = card.value;
             var rank = card.rank;
             var suit = card.suit;
-            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\" onclick=\"testt\">";
+            var btnStart = "<button id=\"" + cardnum + "\" class=\"fieldc\" onclick=\"testt\">";
             var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\">";
             var btnEnd = "</button> ";
             var fullUrl = btnStart + thePath + btnEnd;
@@ -216,7 +249,7 @@
             var value = card.value;
             var rank = card.rank;
             var suit = card.suit;
-            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\" onclick=\"testt\">";
+            var btnStart = "<button id=\"" + cardnum + "\" class=\"compc\" onclick=\"testt\">";
             var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
             var btnEnd = "</button> ";
             var fullUrl = btnStart + thePath + btnEnd;
