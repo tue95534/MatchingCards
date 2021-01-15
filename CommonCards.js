@@ -7,8 +7,11 @@ class Card {
     }
 
     assignRank(value) {
-        if (value < 11) {
+        if (value < 11 && value > 1) {
             this.rank = value.toString();
+        }
+        else if (value == 1) {
+            this.rank = "A";
         }
         else {
             if (value == 11) {
@@ -41,22 +44,22 @@ class CommonCards {
 
     initialize_playing_cards() {
         for (var x = 1; x < 14; x++) {
-            var card = new Card(x, 'hearts');
+            var card = new Card(x, 'H');
             this.list_cards.push(card);
         }
         for (var x = 1; x < 14; x++) {
-            var card = new Card(x, 'spades');
+            var card = new Card(x, 'S');
             this.list_cards.push(card);
         }
         for (var x = 1; x < 14; x++) {
-            var card = new Card(x, 'clubs');
+            var card = new Card(x, 'C');
             this.list_cards.push(card);
         }
         for (var x = 1; x < 14; x++) {
-            var card = new Card(x, 'heart');
+            var card = new Card(x, 'H');
             this.list_cards.push(card);
         }
-        // this.shuffleArray(self.list_cards);
+        this.shuffleArray(this.list_cards);
     }
 
 
@@ -71,15 +74,14 @@ class CommonCards {
 
 
     deal_initial() {
-        return true;
-        // for (x = 0; x < 4; x++) {
-        //     this.user_list.push(this.list_cards[0]);
-        //     this.list_cards.shift();
-        //     this.computer_list.push(this.list_cards[0]);
-        //     this.list_cards.shift();
-        //     this.field_list.push(this.list_cards[0]);
-        //     this.list_cards.shift();
-        // }
+        for (var x = 0; x < 4; x++) {
+            this.user_list.push(this.list_cards[0]);
+            this.list_cards.shift();
+            this.computer_list.push(this.list_cards[0]);
+            this.list_cards.shift();
+            this.field_list.push(this.list_cards[0]);
+            this.list_cards.shift();
+        }
     }
 
 

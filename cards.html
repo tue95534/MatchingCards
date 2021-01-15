@@ -19,6 +19,7 @@
             left: 0;
             right: 0;
             font-size: 50px;
+            background-color: transparent;
             /*max-width: max-content; margin-left: auto; margin-right: auto;*/
         }
         .start {
@@ -34,6 +35,18 @@
             left: 0;
             right: 0;
         }
+
+        .startbtn {
+            width: 150px;
+            height: 45px;
+            background-image: linear-gradient(black, blue);
+            color: white;
+            font-size: 20px;
+            border: 3px solid;
+            border-color: white;
+            border-radius: 8px;
+        }
+
         .comphand{
             position: absolute;
             display: flex;
@@ -43,11 +56,11 @@
             /*border: 2px solid;*/
             /*border-color: black;*/
             height: 150px;
-            top: 130px;
+            top: 150px;
             left: 0;
             right: 0;
             font-size: 50px;
-            background-color: yellow;
+            background-color: transparent;
         }
         .field {
             position: absolute;
@@ -57,11 +70,12 @@
             text-align: center;
             border: 2px solid;
             border-color: black;
-            height: 150px;
-            top: 280px;
+            height: 200px;
+            top: 330px;
             left: 0;
             right: 0;
             font-size: 50px;
+            background-color: transparent;
         }
         .hand {
             position: absolute;
@@ -72,16 +86,57 @@
             border: 2px solid;
             border-color: black;
             height: 200px;
-            top: 450px;
+            top: 540px;
             left: 0;
             right: 0;
             font-size: 50px;
+            background-color: transparent;
         }
         
         .compcard {
             height: max-height;
             width: 100px;
             border: 2px solid;
+        }
+
+        .handc {
+            height: 200px;
+            width: 125px;
+            /* align-items: center;
+            text-align: center; */
+            align-content: center;
+            background-color: transparent;
+        }
+
+        .straight {
+            max-width: 80%;
+            max-height: 80%;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .tilt {
+            max-width: 100%;
+            max-height: 100%;
+            /* -ms-transform: skewX(20deg); IE 9 */
+            transform: skewX(55deg);
+            transform: rotateX(55deg);
+        }
+
+        .smaller {
+            max-width: 60%;
+            max-height: 60%;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        body {
+            background-image: linear-gradient(darkblue, white);
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+        html {
+            height: 100%;
         }
     </style>
 </head>
@@ -93,37 +148,85 @@
         <button class="startbtn" onclick="startFn()">Start Game!</button>
     </div>
 
-    <div class="comphand">
-        <button id="compcard1">hello</button> <button id="compcard">hello</button> <button id="compcard">hello</button> <button id="compcard">hello</button>
+    <div class="comphand" id="comphand">
+        <!-- <button id="compcard1">hello</button> <button id="compcard2">hello</button> <button id="compcard3">hello</button> <button id="compcard4">hello</button> -->
     </div>
     
-    <div class="field">
-        <div class="fieldcard"></div> <div class="fieldcard"></div> <div class="fieldcard"></div> <div class="fieldcard"></div>
+    <div class="field" id="field">
+        <!-- <button id="fieldcard1">hello</button> <button id="fieldcard2">hello</button> <button id="fieldcard3">hello</button> <button id="fieldcard4">hello</button> -->
     </div>
     
-    <div class="hand">hand</div>
+    <div class="hand" id="hand">
+        <!-- <button id="humancard1" class="handc">hello</button> <button id="humancard2" class="handc">hello</button> <button id="humancard3" class="handc">hello</button> <button id="humancard4" class="handc">hello</button> -->
+    </div>
 
-    <script type="text/javascript" src="C:\Users\17173\Documents\GitHub\JS PROJECTS\CommonCards.js"></script>
+    <script type="text/javascript" src="C:\Users\17173\Documents\GitHub\JS PROJECTS\MatchingCards\CommonCards.js"></script>
     <script>
         function startFn(){
-            // document.getElementById("compcard1").innerHTML = "howdy";
             const card1 = new CommonCards(1);
-            // document.getElementById("compcard1").innerHTML = "howdy";
             card1.initialize_playing_cards();
-            //card1.deal_initial();
-            document.getElementById("compcard1").innerHTML = "howdy";
+            card1.deal_initial();
+            var innHTMLHand = "";
+            var innHTMLField = "";
+            var innHTMLComputer = "";
+            for (x = 0; x < 4; x++){
+                var paths = appearHand(card1.user_list[x], x);
+                innHTMLHand = innHTMLHand + paths;
+            }
+            for (x = 0; x < 4; x++){
+                var paths = appearField(card1.field_list[x], x);
+                innHTMLField = innHTMLField + paths;
+            }
+            for (x = 0; x < 4; x++){
+                var paths = appearComp(card1.computer_list[x], x);
+                innHTMLComputer = innHTMLComputer + paths;
+            }
+            document.getElementById('hand').innerHTML = innHTMLHand;
+            document.getElementById('field').innerHTML = innHTMLField;
+            document.getElementById('comphand').innerHTML = innHTMLComputer;
         }
 
-        // document.getElementById("compcard1").onclick = function () {
-        //     var div = document.createElement('div');
-        //     div.style.backgroundColor = "black";
-        //     div.style.position = "absolute";
-        //     div.style.left = "50px";
-        //     div.style.top = "50px";
-        //     div.style.height = "10px";
-        //     div.style.width = "10px";
-        //     document.getElementsByTagName('body')[0].appendChild(div);
-        // };
+        function appearHand(card, x) {
+            var cardnum = x;
+            var value = card.value;
+            var rank = card.rank;
+            var suit = card.suit;
+            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\">";
+            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\">";
+            var btnEnd = "</button> ";
+            var fullUrl = btnStart + thePath + btnEnd;
+            return fullUrl;
+        }
+
+        function appearField(card, x) {
+            var cardnum = x;
+            var value = card.value;
+            var rank = card.rank;
+            var suit = card.suit;
+            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\" onclick=\"testt\">";
+            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\">";
+            var btnEnd = "</button> ";
+            var fullUrl = btnStart + thePath + btnEnd;
+            console.log(fullUrl);
+            return fullUrl;
+        }
+
+        function appearComp(card, x) {
+            var cardnum = x;
+            var value = card.value;
+            var rank = card.rank;
+            var suit = card.suit;
+            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\" onclick=\"testt\">";
+            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
+            var btnEnd = "</button> ";
+            var fullUrl = btnStart + thePath + btnEnd;
+            console.log(fullUrl);
+            return fullUrl;
+        }
+
+        function testt() {
+            document.getElementById("compcard1").innerHTML = "doody";
+        }
     </script>
     
     
