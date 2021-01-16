@@ -61,13 +61,14 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 10px solid;
-            border-color: white;
-            border-radius: 20px;
+            border-top: 7px solid;
+            border-bottom: 7px solid;
+            border-color: red;
+            /* border-radius: 20px; */
             height: 150px;
             top: 150px;
-            left: 175px;
-            right: 175px;
+            left: 165px;
+            right: 165px;
             font-size: 80px;
             background-color: transparent;
         }
@@ -78,13 +79,14 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 10px solid;
-            border-color: white;
-            border-radius: 20px;
+            border-top: 7px solid;
+            border-bottom: 7px solid;
+            border-color: red;
+            /* border-radius: 20px; */
             height: 150px;
             top: 330px;
-            left: 175px;
-            right: 175px;
+            left: 165px;
+            right: 165px;
             font-size: 50px;
             background-color: transparent;
         }
@@ -95,30 +97,50 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 10px solid;
-            border-color: white;
-            border-radius: 20px;
-            height: 150px;
-            top: 510px;
-            left: 175px;
-            right: 175px;
+            border-top: 7px solid;
+            border-bottom: 7px solid;
+            border-color: red;
+            /* border-radius: 20px; */
+            height: 160px;
+            top: 515px;
+            left: 165px;
+            right: 165px;
             font-size: 50px;
             background-color: transparent;
         }
 
-        .sidelabel {
+        .leftlabel {
             position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 10px solid;
-            border-color: white;
+            /* border: 10px solid;
+            border-color: white; */
             border-radius: 20px;
-            height: 510px;
+            height: 520px;
             width: 125px;
             top: 150px;
-            left: 10px;
+            left: 20px;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .rightlabel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* border: 10px solid;
+            border-color: white; */
+            border-radius: 20px;
+            height: 520px;
+            width: 125px;
+            top: 150px;
+            right: 20px;
             background-color: transparent;
             display: flex;
             flex-direction: column;
@@ -128,6 +150,18 @@
         .label {
             padding-top: 50px;
             padding-bottom: 50px;
+            font-size: 27px;
+            text-shadow: 1px 1px 0px red, 
+                  2px 2px 0px blue, 
+                  3px 3px 0px yellow, 
+                  4px 4px 0px purple, 
+                  5px 5px 0px orange;
+            border: 5px darkblue solid;
+            padding: 7px;
+            margin-top: 35px;
+            margin-bottom: 35px;
+            border-radius: 8px;
+            box-shadow: 5px 10px;
         }
 
         .handc {
@@ -213,23 +247,21 @@
         <button class="startbtn" onclick="startFn()">Start Game!</button>
     </div>
 
-    <div class="comphand" id="comphand">
-        <!-- <button id="compcard1">hello</button> <button id="compcard2">hello</button> <button id="compcard3">hello</button> <button id="compcard4">hello</button> -->
-    </div>
+    <div class="comphand" id="comphand"></div>
     
-    <div class="field" id="field">
-        <!-- <button id="fieldcard1">hello</button> <button id="fieldcard2">hello</button> <button id="fieldcard3">hello</button> <button id="fieldcard4">hello</button> -->
-    </div>
+    <div class="field" id="field"></div>
     
-    <div class="hand" id="hand">
-        <!-- <button id="humancard1" class="handc">hello</button> <button id="humancard2" class="handc">hello</button> <button id="humancard3" class="handc">hello</button> <button id="humancard4" class="handc">hello</button> -->
+    <div class="hand" id="hand"></div>
+
+    <div class="leftlabel">
+        <div class="label">COMPUTER HAND</div> <div class="label">FIELD</div> <div class="label">YOUR HAND</div>
     </div>
 
-    <div class="sidelabel">
-        <div class="label">Computer's Hand</div> <div class="label">Field</div> <div class="label">Hand</div>
+    <div class="rightlabel">
+        <div class="label">COMPUTER HAND</div> <div class="label">FIELD</div> <div class="label">YOUR HAND</div>
     </div>
 
-    <script type="text/javascript" src="C:\Users\17173\Documents\GitHub\JS PROJECTS\MatchingCards\CommonCards.js"></script>
+    <script type="text/javascript" src="CommonCards.js"></script>
     <script>
         function startFn(){
             const card1 = new CommonCards(1);
@@ -239,62 +271,73 @@
             var innHTMLField = "";
             var innHTMLComputer = "";
             for (x = 0; x < 4; x++){
-                var paths = appearHand(card1.user_list[x], x);
-                innHTMLHand = innHTMLHand + paths;
+                // var paths = appearHand(card1.user_list[x], x);
+                // innHTMLHand = innHTMLHand + paths;
+                appearHand(card1.user_list[x]);
             }
             for (x = 0; x < 4; x++){
-                var paths = appearField(card1.field_list[x], x);
-                innHTMLField = innHTMLField + paths;
+                appearField(card1.field_list[x]);
             }
             for (x = 0; x < 4; x++){
-                var paths = appearComp(card1.computer_list[x], x);
-                innHTMLComputer = innHTMLComputer + paths;
+                appearComp(card1.computer_list[x]);
+                // var paths = appearComp(card1.computer_list[x]);
+                // innHTMLComputer = innHTMLComputer + paths;
             }
-            document.getElementById('hand').innerHTML = innHTMLHand;
-            document.getElementById('field').innerHTML = innHTMLField;
-            document.getElementById('comphand').innerHTML = innHTMLComputer;
+            // document.getElementById('hand').innerHTML = innHTMLHand;
+            // document.getElementById('field').innerHTML = innHTMLField;
+            // document.getElementById('comphand').innerHTML = innHTMLComputer;
         }
 
-        function appearHand(card, x) {
-            var cardnum = x;
+        function appearHand(card) {
             var value = card.value;
             var rank = card.rank;
             var suit = card.suit;
-            var btnStart = "<button id=\"" + cardnum + "\" class=\"handc\">";
-            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\">";
-            var btnEnd = "</button> ";
-            var fullUrl = btnStart + thePath + btnEnd;
-            return fullUrl;
+
+            var button = document.createElement('button');
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\">";
+            button.innerHTML = thePath;
+            button.id = rank + suit;
+            button.className = "handc";
+            button.onclick = function(){
+                console.log("hello");
+                };
+            document.getElementById("hand").appendChild(button);
         }
 
-        function appearField(card, x) {
-            var cardnum = x;
+        function appearField(card) {
             var value = card.value;
             var rank = card.rank;
             var suit = card.suit;
-            var btnStart = "<button id=\"" + cardnum + "\" class=\"fieldc\" onclick=\"testt\">";
-            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\">";
-            var btnEnd = "</button> ";
-            var fullUrl = btnStart + thePath + btnEnd;
-            console.log(fullUrl);
-            return fullUrl;
+
+            var button = document.createElement('button');
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\">";
+            button.innerHTML = thePath;
+            button.id = rank + suit;
+            button.className = "fieldc";
+            button.onclick = function(){
+                console.log("hello");
+                };
+            document.getElementById("field").appendChild(button);
         }
 
-        function appearComp(card, x) {
-            var cardnum = x;
+        function appearComp(card) {
             var value = card.value;
             var rank = card.rank;
             var suit = card.suit;
-            var btnStart = "<button id=\"" + cardnum + "\" class=\"compc\" onclick=\"testt\">";
-            var thePath = "<img src=\"C:/Users/17173/Desktop/deck of cards/CARDBACK.png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
-            var btnEnd = "</button> ";
-            var fullUrl = btnStart + thePath + btnEnd;
-            console.log(fullUrl);
-            return fullUrl;
+
+            var button = document.createElement('button');
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
+            button.innerHTML = thePath;
+            button.id = rank + suit;
+            button.className = "compc";
+            button.onclick = function(){
+                console.log("hello");
+                };
+            document.getElementById("comphand").appendChild(button);
         }
 
         function testt() {
-            document.getElementById("compcard1").innerHTML = "doody";
+            document.getElementById("field").innerHTML = "doody";
         }
     </script>
     
