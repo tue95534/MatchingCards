@@ -264,6 +264,13 @@
     <script type="text/javascript" src="CommonCards.js"></script>
     <script>
         function startFn(){
+            removeAllChildNodes(document.getElementById('hand'));
+            removeAllChildNodes(document.getElementById('field'));
+            removeAllChildNodes(document.getElementById('comphand'));
+
+            alert("Instructions: Click on a card in your hand if you see a matching card rank on the field. If there is a " +
+            "match on the field, these cards will go into your score pile. A jack takes all cards on the field and moves" +
+            "them into your score pile. After every four turns you will receive four more cards to your hand.");
             const card1 = new CommonCards(1);
             card1.initialize_playing_cards();
             card1.deal_initial();
@@ -286,6 +293,12 @@
             // document.getElementById('hand').innerHTML = innHTMLHand;
             // document.getElementById('field').innerHTML = innHTMLField;
             // document.getElementById('comphand').innerHTML = innHTMLComputer;
+        }
+
+        function removeAllChildNodes(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
         }
 
         function appearHand(card) {
