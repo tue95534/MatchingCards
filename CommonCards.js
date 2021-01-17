@@ -181,8 +181,9 @@ class CommonCards {
             this.computerscore++;
             this.field_list = [];
             for (x = 0; x < this.computer_list.length; x++) {
-                if (this.computer_list[x].rank == this.jackID[0] && this.computer_list[x].suit == this.jackID[1]) {
+                if (this.computer_list[x].rank == "J") {
                     this.computer_list.splice(x, 1);
+                    break;
                 }
             }
             console.log("2");
@@ -195,6 +196,7 @@ class CommonCards {
             console.log("3");
         }
     }
+
 
     play(idMax, rank, suit) {
         for (x = 0; x < this.field_list.length; x++) {
@@ -212,23 +214,35 @@ class CommonCards {
         }
     }
 
+
     play() {
-        if (this.computer_list[0].rank != "J") {
-            var card_to_play = this.computer_list[0];
-            this.field_list.push(card_to_play);
-            this.computer_list.splice(0,1);
+        var count = 0;
+        for (x = 0; x < this.computer_list.length; x++) {
+            if (this.computer_list[x].rank == "J") {
+                count++;
+            }
+        }
+
+        if (this.computer_list.length > count) {
+            outerloop:
+            for (x = 0; x < this.computer_list.length; x++) {
+                if (this.computer_list[x].rank != "J") {
+                    var card_to_play = this.computer_list[x];
+                    this.field_list.push(card_to_play);
+                    this.computer_list.splice(x,1);
+                    break outerloop;
+                }
+            }
         }
         else {
             this.computerscore+=this.field_list.length;
             this.computerscore++;
             this.field_list = [];
-            for (x = 0; x < this.computer_list.length; x++) {
-                if (this.computer_list[x].rank == this.jackID[0] && this.ccomputer_list[x].suit == this.jackID[1]) {
-                    this.computer_list.splice(x, 1);
-                }
-            }
+            this.computer_list.splice(0, 1);
         }
     }
+    
+
 
     jackHand() {
         for (x = 0; x < this.computer_list.length; x++) {
@@ -240,17 +254,11 @@ class CommonCards {
         return false;
     }
 
+
     computerMatch() {
         for (x = 0; x < this.computer_list.length; x++) {
             for (var y = 0; y < this.field_list.length; y++) {
                 if (this.computer_list[x].rank.toString() == this.field_list[y].rank.toString()) {
-                    // var computerId = this.computer_list[x].rank.toString() + this.computer_list[x].suit.toString();
-                    // var fieldId = this.field_list[y].rank.toString() + this.field_list[y].suit.toString();
-                    // console.log(fieldId);
-                    // document.getElementById(fieldId).remove();
-                    // document.getElementById(computerId).remove();
-                    // computerScore = computerScore + 2;
-                    // console.log(y);
                     this.computerscore+=2;
                     this.computer_list.splice(x, 1);
                     this.field_list.splice(y, 1);
@@ -262,49 +270,42 @@ class CommonCards {
     }
 
 
-    // deal_cards() {
-    //     var length = this.list_cards.length;
-    //     if (length > 7) {
-    //         for (x = 0; x < 4; x++) {
-    //             this.user_list.push(this.list_cards[0]);
-    //             this.list_cards.remove(0);
-    //             this.computer_list.push(this.self.list_cards[0]);
-    //             this.list_cards.remove(0);
-    //             return 8;
-    //         }
-    //     }
-    //     else if (length < 2) {
-    //         this.game_over = true;
-    //     }
-    //     else {
-    //         if (length % 2 != 0) {
-    //             self.list_cards.remove(0);
-    //             length = this.list_cards.length;
-    //         }
-    //         iterations = length / 2;
-    //         for (x = 0; x < length; x++) {
-    //             this.user_list.push(this.list_cards[0])
-    //             this.list_cards.remove(0);
-    //             this.computer_list.push(this.list_cards[0]);
-    //             this.list_cards.remove(0);
-    //             return iterations;
-    //         }
-    //     }
-    // }
+    checkgame() {
+        if (this.computer_list.length == 0 && this.user_list.length == 0) {
+            return true;
+        }
+        return false;
+    }
 
 
-    // print_situation() {
-    //     var field = "";
-    //     for (x = 0; x < this.field_list.length; x++) {
-    //         field = field + " " + this.field_list[x].rank.toString();
-    //     }
-    //     // print(field)
-    //     var print_list = 'Your Hand: ';
-    //     for (x = 0; x < this.user_list.length; x++) {
-    //         print_list += this.user_list[x].rank.toString(); + ", ";
-    //     }
-    //     print_list = print_list.substr(0, -2);
-    //     // print(print_list)
-    // }
-    
+    deal_cards() {
+        var length = this.list_cards.length;
+        if (length > 7) {
+            console.log("yes");
+            for (x = 0; x < 4; x++) {
+                this.user_list.push(this.list_cards[0]);
+                this.list_cards.splice(0, 1);
+                this.computer_list.push(this.list_cards[0]);
+                this.list_cards.splice(0, 1);
+            }
+            return 8;
+        }
+        else if (length < 2) {
+            this.game_over = true;
+        }
+        else {
+            if (length % 2 != 0) {
+                self.list_cards.splice(0, 1);
+                length = this.list_cards.length;
+            }
+            iterations = length / 2;
+            for (x = 0; x < length; x++) {
+                this.user_list.push(this.list_cards[0])
+                this.list_cards.splice(0, 1);
+                this.computer_list.push(this.list_cards[0]);
+                this.list_cards.splice(0, 1);
+                return iterations;
+            }
+        }
+    }  
 }
