@@ -3,7 +3,10 @@ class Card {
     constructor(value, suit) {
         this.value = value;
         this.suit = suit;
+        this.rank = "";
         this.assignRank(this.value);
+        this.humanscore = 0;
+        this.computerscore = 0;
     }
 
     assignRank(value) {
@@ -43,6 +46,15 @@ class CommonCards {
 
 
     initialize_playing_cards() {
+        this.list_cards = [];
+        this.user_list = [];
+        this.computer_list = [];
+        this.field_list = [];
+        this.computer_score_list = [];
+        this.user_score_list = [];
+        this.humanscore = 0;
+        this.computerscore = 0;
+        this.jackID = "";
         for (var x = 1; x < 14; x++) {
             var card = new Card(x, 'H');
             this.list_cards.push(card);
@@ -82,6 +94,171 @@ class CommonCards {
             this.field_list.push(this.list_cards[0]);
             this.list_cards.shift();
         }
+    }
+
+
+    human_turn(rank, suit) {
+        console.log("Rank: ", rank, " Suit: ", suit);
+        if (rank.toString() == "J") {
+            this.humanscore+=this.field_list.length;
+            this.humanscore++;
+            this.field_list = [];
+            for (x=0; x < this.user_list.length; x++) {
+                if (this.user_list[x].rank == rank && this.user_list[x].suit == suit) {
+                    this.user_list.splice(x, 1);
+                }
+            }
+        }
+        else {
+            var matches = false;
+            outerloop:
+            for (var x = 0; x < this.field_list.length; x++) {
+                var theRank = this.field_list[x].rank;
+                if (this.field_list[x].rank == rank) {
+                    matches = true;
+                    break outerloop;
+                }
+            }
+            if (matches == true) {
+                for (var x = this.field_list.length - 1; x>=0; x--) {
+                    if (this.field_list[x].rank == rank) {
+                        this.field_list.splice(x, 1);
+                        this.humanscore++;
+                    }
+                }
+                for (x=0; x < this.user_list.length; x++) {
+                    if (this.user_list[x].rank == rank && this.user_list[x].suit == suit) {
+                        this.user_list.splice(x, 1);
+                    }
+                }
+                this.humanscore++;
+            }
+            else {
+                for (x=0; x < this.user_list.length; x++) {
+                    if (this.user_list[x].rank == rank && this.user_list[x].suit == suit) {
+                        this.field_list.push(this.user_list[x]);
+                        this.user_list.splice(x, 1);
+                    }
+                }
+            }
+        } 
+    }
+
+
+    computer_turn() {
+        let matchesMap = new Map();
+        for (x = 0; x < this.computer_list.length; x++) {
+            var compRank = this.computer_list[x].rank.toString();
+            var compID = compRank + this.computer_list[x].suit.toString();
+            var count = 0;
+            for (var y = 0; y < this.field_list.length; y++) {
+                var fieldRank = this.field_list[y].rank.toString();
+                if (compRank == fieldRank) {
+                    count++;
+                }
+            }
+            matchesMap[compID] = count;
+        }
+        var max = 0;
+        var idMax = "";
+        for (var m in matchesMap) {
+            for (var i = 0; i < matchesMap[m].length; i++){
+                if (matchesMap[m][i] > max) {
+                    max = matchesMap[m][i];
+                    idMax = matchesMap[m];
+                }
+            }
+        }
+
+        if (max > 1) {
+            var rank = idMax[0];
+            var suit = idMax[1];
+            this.play(idMax, rank, suit);
+            console.log("1");
+        }
+        else if (this.field_list.length > 2 && this.jackHand()) {
+            this.computerscore+=this.field_list.length;
+            this.computerscore++;
+            this.field_list = [];
+            for (x = 0; x < this.computer_list.length; x++) {
+                if (this.computer_list[x].rank == this.jackID[0] && this.computer_list[x].suit == this.jackID[1]) {
+                    this.computer_list.splice(x, 1);
+                }
+            }
+            console.log("2");
+        }
+        else if (this.computerMatch()) {
+            console.log("3");
+        }
+        else {
+            this.play();
+            console.log("3");
+        }
+    }
+
+    play(idMax, rank, suit) {
+        for (x = 0; x < this.field_list.length; x++) {
+            var fieldRank = this.field_list[x].rank;
+            if (rank == fieldRank) {
+                this.field_list.splice(x, 1);
+                computerScore++;
+            }
+        }
+        computerScore++;
+        for (x = 0; x < this.computer_list.length; x++) {
+            if (this.computer_list.rank == rank && this.computer_list.suit == suit) {
+                this.field_list.splice(x, 1);
+            }
+        }
+    }
+
+    play() {
+        if (this.computer_list[0].rank != "J") {
+            var card_to_play = this.computer_list[0];
+            this.field_list.push(card_to_play);
+            this.computer_list.splice(0,1);
+        }
+        else {
+            this.computerscore+=this.field_list.length;
+            this.computerscore++;
+            this.field_list = [];
+            for (x = 0; x < this.computer_list.length; x++) {
+                if (this.computer_list[x].rank == this.jackID[0] && this.ccomputer_list[x].suit == this.jackID[1]) {
+                    this.computer_list.splice(x, 1);
+                }
+            }
+        }
+    }
+
+    jackHand() {
+        for (x = 0; x < this.computer_list.length; x++) {
+            if (this.computer_list[x].rank.toString() == "J") {
+                jackID = this.computer_list[x].rank.toString() + this.computer_list[x].suit.toString();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    computerMatch() {
+        for (x = 0; x < this.computer_list.length; x++) {
+            for (var y = 0; y < this.field_list.length; y++) {
+                if (this.computer_list[x].rank.toString() == this.field_list[y].rank.toString()) {
+                    // var computerId = this.computer_list[x].rank.toString() + this.computer_list[x].suit.toString();
+                    // var fieldId = this.field_list[y].rank.toString() + this.field_list[y].suit.toString();
+                    // console.log(fieldId);
+                    // document.getElementById(fieldId).remove();
+                    // document.getElementById(computerId).remove();
+                    // computerScore = computerScore + 2;
+                    // console.log(y);
+                    this.computerscore+=2;
+                    this.computer_list.splice(x, 1);
+                    this.field_list.splice(y, 1);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

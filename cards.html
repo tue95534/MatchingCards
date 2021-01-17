@@ -258,41 +258,40 @@
     </div>
 
     <div class="rightlabel">
-        <div class="label">COMPUTER HAND</div> <div class="label">FIELD</div> <div class="label">YOUR HAND</div>
+        <div class="label" id="compscore"></div> <div class="label">FIELD</div> <div class="label" id="humanscore"></div>
     </div>
 
     <script type="text/javascript" src="CommonCards.js"></script>
     <script>
+        const card1 = new CommonCards(1);
+        var humScore = 0;
+        var computerScore = 0;
+        var jackID = "";
+
         function startFn(){
+            humScore = 0;
+            computerScore = 0;
             removeAllChildNodes(document.getElementById('hand'));
             removeAllChildNodes(document.getElementById('field'));
             removeAllChildNodes(document.getElementById('comphand'));
-
+            document.getElementById('compscore').innerHTML = computerScore;
+            document.getElementById('humanscore').innerHTML = humScore;
             alert("Instructions: Click on a card in your hand if you see a matching card rank on the field. If there is a " +
             "match on the field, these cards will go into your score pile. A jack takes all cards on the field and moves" +
             "them into your score pile. After every four turns you will receive four more cards to your hand.");
-            const card1 = new CommonCards(1);
+            
             card1.initialize_playing_cards();
             card1.deal_initial();
-            var innHTMLHand = "";
-            var innHTMLField = "";
-            var innHTMLComputer = "";
+
             for (x = 0; x < 4; x++){
-                // var paths = appearHand(card1.user_list[x], x);
-                // innHTMLHand = innHTMLHand + paths;
-                appearHand(card1.user_list[x]);
+                appearHand(card1.user_list[x].rank, card1.user_list[x].suit);
             }
             for (x = 0; x < 4; x++){
-                appearField(card1.field_list[x]);
+                appearField(card1.field_list[x].rank, card1.field_list[x].suit);
             }
             for (x = 0; x < 4; x++){
-                appearComp(card1.computer_list[x]);
-                // var paths = appearComp(card1.computer_list[x]);
-                // innHTMLComputer = innHTMLComputer + paths;
+                appearComp(card1.computer_list[x].rank, card1.computer_list[x].suit);
             }
-            // document.getElementById('hand').innerHTML = innHTMLHand;
-            // document.getElementById('field').innerHTML = innHTMLField;
-            // document.getElementById('comphand').innerHTML = innHTMLComputer;
         }
 
         function removeAllChildNodes(parent) {
@@ -301,60 +300,187 @@
             }
         }
 
-        function appearHand(card) {
-            var value = card.value;
-            var rank = card.rank;
-            var suit = card.suit;
-
+        function appearHand(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\">";
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "handc";
             button.onclick = function(){
-                console.log("hello");
+                match(rank, suit);
                 };
             document.getElementById("hand").appendChild(button);
         }
 
-        function appearField(card) {
-            var value = card.value;
-            var rank = card.rank;
-            var suit = card.suit;
-
+        function appearField(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\">";
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "fieldc";
-            button.onclick = function(){
-                console.log("hello");
-                };
             document.getElementById("field").appendChild(button);
         }
 
-        function appearComp(card) {
-            var value = card.value;
-            var rank = card.rank;
-            var suit = card.suit;
-
+        function appearComp(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\">";
+            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "compc";
-            button.onclick = function(){
-                console.log("hello");
-                };
             document.getElementById("comphand").appendChild(button);
         }
 
-        function testt() {
-            document.getElementById("field").innerHTML = "doody";
+        function match(rank, suit) {
+            card1.human_turn(rank, suit);
+            removeAllChildNodes(document.getElementById('hand'));
+            for (x = 0; x < card1.user_list.length; x++){
+                appearHand(card1.user_list[x].rank, card1.user_list[x].suit);
+            }
+            removeAllChildNodes(document.getElementById('field'));
+            for (x = 0; x < card1.field_list.length; x++){
+                appearField(card1.field_list[x].rank, card1.field_list[x].suit);
+            }
+            document.getElementById('humanscore').innerHTML = card1.humanscore;
+
+            card1.computer_turn();
+            removeAllChildNodes(document.getElementById('comphand'));
+            for (x = 0; x < card1.computer_list.length; x++){
+                appearComp(card1.computer_list[x].rank, card1.computer_list[x].suit);
+            }
+            removeAllChildNodes(document.getElementById('field'));
+            for (x = 0; x < card1.field_list.length; x++){
+                appearField(card1.field_list[x].rank, card1.field_list[x].suit);
+            }
+            document.getElementById('compscore').innerHTML = card1.computerscore;
+            // var rankCard = rankH.toString();
+            // if (rankH == "J") {
+            //     while (document.getElementById("field").firstChild) {
+            //         document.getElementById("field").removeChild(document.getElementById("field").firstChild);
+            //         humScore++;
+            //     }
+            //     humScore++;
+            //     var handID = rankCard + suitH + "";
+            //     document.getElementById(handID).remove();
+            //     document.getElementById("humanscore").innerHTML = humScore;
+            //     computerTurn();
+            // }
+            // else {
+            //     var replaced = false;
+            //     for (x=0; x < card1.field_list.length; x++) {
+            //         var fieldRank = card1.field_list[x].rank.toString();
+            //         var fieldSuit = card1.field_list[x].suit.toString();
+            //         if (rankCard == fieldRank) {
+            //             var fieldID = fieldRank + fieldSuit + "";
+            //             document.getElementById(fieldID).remove();
+            //             humScore++;
+            //             replaced = true;
+            //         }
+            //     }
+            //     humScore++;
+            //     var handID = rankCard + suitH + "";
+            //     if (replaced) {document.getElementById(handID).remove();}
+            //     document.getElementById("humanscore").innerHTML = humScore;
+            //     computerTurn();
+            // }
         }
+
+        function computerTurn() {
+            let matchesMap = new Map();
+            for (x=0; x < card1.computer_list.length; x++) {
+                var compRank = card1.computer_list[x].rank.toString();
+                var compID = compRank + card1.computer_list[x].suit.toString();
+                var count = 0;
+                for (y = 0; y < card1.field_list.length; y++) {
+                    var fieldRank = card1.field_list[x].rank.toString();
+                    if (compRank == fieldRank) {
+                        count++;
+                    }
+                }
+                matchesMap[compID] = count;
+            }
+            var max = 0;
+            var idMax = "";
+            for (var m in matchesMap) {
+                for (var i=0;i<matchesMap[m].length;i++){
+                    if (matchesMap[m][i] > max) {
+                        max = matchesMap[m][i];
+                        idMax = matchesMap[m];
+                    }
+                }
+            }
+            if (max > 1) {
+                rank = idMax[0];
+                play(idMax, rank);
+                console.log("1");
+            }
+            else if (card1.field_list.length > 2 && jackHand()) {
+                while (document.getElementById("field").firstChild) {
+                    document.getElementById("field").removeChild(document.getElementById("field").firstChild);
+                    computerScore++;
+                }
+                computerScore++;
+                document.getElementById(jackID).remove();
+                document.getElementById("compscore").innerHTML = computerScore;
+                console.log("2");
+            }
+            else if (computerMatch()) {
+                document.getElementById("compscore").innerHTML = computerScore;
+                console.log("3");
+            }
+            else {
+                var playRank = document.getElementById("comphand").firstChild.id[0];
+                console.log(playRank);
+                var playSuit = document.getElementById("comphand").firstChild.id[1];
+                console.log(playSuit);
+                var removeId = playRank + playSuit;
+                console.log(removeId);
+                appearField(playRank, playSuit);
+                document.getElementById(removeId).remove();
+                console.log("4");
+            }
+        }
+
+        function computerMatch() {
+            for (x = 0; x < card1.computer_list.length; x++) {
+                for (y = 0; y < card1.field_list.length; y++) {
+                    if (card1.computer_list[x].rank.toString() == card1.field_list[y].rank.toString()) {
+                        var computerId = card1.computer_list[x].rank.toString() + card1.computer_list[x].suit.toString();
+                        var fieldId = card1.field_list[y].rank.toString() + card1.field_list[y].suit.toString();
+                        console.log(fieldId);
+                        document.getElementById(fieldId).remove();
+                        document.getElementById(computerId).remove();
+                        computerScore = computerScore + 2;
+                        console.log(y);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function play(idMax, rank) {
+            for (x = 0; x < card1.field_list.length; x++) {
+                var fieldRank = card1.field_list[x].id[0];
+                if (rank == fieldRank) {
+                    document.getElementById(document.getElementById(card1.field_list[x].id)).remove();
+                    computerScore++;
+                }
+            }
+            computerScore++;
+            document.getElementById(idMax).remove();
+        }
+
+        function jackHand() {
+            for (x = 0; x < card1.computer_list.length; x++) {
+                if (card1.computer_list[x].rank.toString() == "J") {
+                    jackID = card1.computer_list[x].rank.toString() + card1.computer_list[x].suit.toString();
+                    return true;
+                }
+            }
+            return false;
+        }
+
     </script>
-    
-    
     
 </body>
 
