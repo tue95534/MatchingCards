@@ -349,15 +349,7 @@
             document.getElementById('humanscore').innerHTML = card1.humanscore;
 
             card1.computer_turn();
-            // removeAllChildNodes(document.getElementById('comphand'));
-            //     for (x = 0; x < card1.computer_list.length; x++){
-            //         appearComp(card1.computer_list[x].rank, card1.computer_list[x].suit);
-            //     }
-            //     removeAllChildNodes(document.getElementById('field'));
-            //     for (x = 0; x < card1.field_list.length; x++){
-            //         appearField(card1.field_list[x].rank, card1.field_list[x].suit);
-            //     }
-            //     document.getElementById('compscore').innerHTML = card1.computerscore;
+            
 
             if (card1.checkgame()) {
                 console.log("checkgame true");
@@ -391,103 +383,6 @@
                 document.getElementById('compscore').innerHTML = card1.computerscore;
                 }
         }
-
-
-        // function computerTurn() {
-        //     let matchesMap = new Map();
-        //     for (x=0; x < card1.computer_list.length; x++) {
-        //         var compRank = card1.computer_list[x].rank.toString();
-        //         var compID = compRank + card1.computer_list[x].suit.toString();
-        //         var count = 0;
-        //         for (y = 0; y < card1.field_list.length; y++) {
-        //             var fieldRank = card1.field_list[x].rank.toString();
-        //             if (compRank == fieldRank) {
-        //                 count++;
-        //             }
-        //         }
-        //         matchesMap[compID] = count;
-        //     }
-        //     var max = 0;
-        //     var idMax = "";
-        //     for (var m in matchesMap) {
-        //         for (var i=0;i<matchesMap[m].length;i++){
-        //             if (matchesMap[m][i] > max) {
-        //                 max = matchesMap[m][i];
-        //                 idMax = matchesMap[m];
-        //             }
-        //         }
-        //     }
-        //     if (max > 1) {
-        //         rank = idMax[0];
-        //         play(idMax, rank);
-        //         console.log("1");
-        //     }
-        //     else if (card1.field_list.length > 2 && jackHand()) {
-        //         while (document.getElementById("field").firstChild) {
-        //             document.getElementById("field").removeChild(document.getElementById("field").firstChild);
-        //             computerScore++;
-        //         }
-        //         computerScore++;
-        //         document.getElementById(jackID).remove();
-        //         document.getElementById("compscore").innerHTML = computerScore;
-        //         console.log("2");
-        //     }
-        //     else if (computerMatch()) {
-        //         document.getElementById("compscore").innerHTML = computerScore;
-        //         console.log("3");
-        //     }
-        //     else {
-        //         var playRank = document.getElementById("comphand").firstChild.id[0];
-        //         console.log(playRank);
-        //         var playSuit = document.getElementById("comphand").firstChild.id[1];
-        //         console.log(playSuit);
-        //         var removeId = playRank + playSuit;
-        //         console.log(removeId);
-        //         appearField(playRank, playSuit);
-        //         document.getElementById(removeId).remove();
-        //         console.log("4");
-        //     }
-        // }
-
-        // function computerMatch() {
-        //     for (x = 0; x < card1.computer_list.length; x++) {
-        //         for (y = 0; y < card1.field_list.length; y++) {
-        //             if (card1.computer_list[x].rank.toString() == card1.field_list[y].rank.toString()) {
-        //                 var computerId = card1.computer_list[x].rank.toString() + card1.computer_list[x].suit.toString();
-        //                 var fieldId = card1.field_list[y].rank.toString() + card1.field_list[y].suit.toString();
-        //                 console.log(fieldId);
-        //                 document.getElementById(fieldId).remove();
-        //                 document.getElementById(computerId).remove();
-        //                 computerScore = computerScore + 2;
-        //                 console.log(y);
-        //                 return true;
-        //             }
-        //         }
-        //     }
-        //     return false;
-        // }
-
-        // function play(idMax, rank) {
-        //     for (x = 0; x < card1.field_list.length; x++) {
-        //         var fieldRank = card1.field_list[x].id[0];
-        //         if (rank == fieldRank) {
-        //             document.getElementById(document.getElementById(card1.field_list[x].id)).remove();
-        //             computerScore++;
-        //         }
-        //     }
-        //     computerScore++;
-        //     document.getElementById(idMax).remove();
-        // }
-
-        // function jackHand() {
-        //     for (x = 0; x < card1.computer_list.length; x++) {
-        //         if (card1.computer_list[x].rank.toString() == "J") {
-        //             jackID = card1.computer_list[x].rank.toString() + card1.computer_list[x].suit.toString();
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
 
     </script>
     
