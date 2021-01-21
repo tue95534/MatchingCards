@@ -278,7 +278,7 @@
             document.getElementById('compscore').innerHTML = computerScore;
             document.getElementById('humanscore').innerHTML = humScore;
             alert("Instructions: Click on a card in your hand if you see a matching card rank on the field. If there is a " +
-            "match on the field, these cards will go into your score pile. A jack takes all cards on the field and moves" +
+            "match on the field, these cards will go into your score pile. A jack takes all cards on the field and moves " +
             "them into your score pile. After every four turns you will receive four more cards to your hand.");
             
             card1.initialize_playing_cards();
@@ -305,7 +305,7 @@
 
         function appearHand(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"straight\"" + " id=\"" + rank + suit + "\">";
+            var thePath = "<img src=\"" + rank + suit + ".PNG\" alt=\"" + rank + suit + "\" class=\"straight\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "handc";
@@ -318,7 +318,7 @@
 
         function appearField(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"tilt\"" + " id=\"" + rank + suit + "\">";
+            var thePath = "<img src=\"" + rank + suit + ".PNG\" alt=\"" + rank + suit + "\" class=\"tilt\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "fieldc";
@@ -328,7 +328,7 @@
 
         function appearComp(rank, suit) {
             var button = document.createElement('button');
-            var thePath = "<img src=\"" + rank + suit + ".png\" alt=\"" + rank + suit + "\" class=\"smaller\"" + " id=\"" + rank + suit + "\">";
+            var thePath = "<img src=\"" + rank + suit + ".PNG\" alt=\"" + rank + suit + "\" class=\"smaller\"" + " id=\"" + rank + suit + "\">";
             button.innerHTML = thePath;
             button.id = rank + suit;
             button.className = "compc";
