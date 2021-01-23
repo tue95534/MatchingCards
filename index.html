@@ -237,6 +237,45 @@
             border-color: white;
             transition: border-color 1s;
         }
+
+        /* .imgrotate {
+            position: absolute;
+            height: 150px;
+            width: 200px;
+            max-height: 100%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 155px;
+            display: flex;
+            justify-content: center;
+            border: 2px solid;
+            background-color: none;
+        } */
+
+        #chosencard {
+            max-width:100%;
+            max-height:100%;
+            margin: 0px;
+            color: red;
+        }
+
+        .chosencomp {
+            height: 142px;
+            border: 5px solid;
+            width: 100px;
+            color: darkblue;
+            border-radius: 8px;
+        }
+
+        .compcardlabel {
+            font-size: 12px;
+            position: absolute;
+            top: 320px;
+            right: 22px;
+            font-weight: bold;
+            color: darkblue;
+        }
     </style>
 </head>
 
@@ -258,8 +297,10 @@
     </div>
 
     <div class="rightlabel">
-        <div class="label" id="compscore"></div> <div class="label">FIELD</div> <div class="label" id="humanscore"></div>
+        <div class="label" id="compscore"></div> <div class="chosencomp" id="chosencomp"></div> <div class="label" id="humanscore"></div>
     </div>
+
+    <div class="compcardlabel">COMPUTER PLAYED</div>
 
     <script type="text/javascript" src="CommonCards.js"></script>
 
@@ -311,7 +352,7 @@
             button.className = "handc";
             button.onclick = function(){
                 match(rank, suit);
-                };
+            };
             document.getElementById("hand").appendChild(button);
         }
 
@@ -335,8 +376,9 @@
             document.getElementById("comphand").appendChild(button);
         }
 
-
         function match(rank, suit) {
+            rank = rank.toString();
+            suit = suit.toString();
             card1.human_turn(rank, suit);
             removeAllChildNodes(document.getElementById('hand'));
             for (x = 0; x < card1.user_list.length; x++){
@@ -348,9 +390,33 @@
             }
             document.getElementById('humanscore').innerHTML = card1.humanscore;
 
-            card1.computer_turn();
-            
+            var imgid = card1.computer_turn();
+            console.log(imgid);
+            if (imgid.length < 3) {
+                var imgrank = imgid[0];
+                var imgsuit = imgid[1];
+            }
+            else {
+                var imgrank = imgid[0] + imgid[1];
+                var imgsuit = imgid[2];
+            }
+            document.getElementById("chosencomp").innerHTML = "<center><img src=\"" + imgid + ".PNG\" alt=\"" + imgid + "\" id=\"chosencard\"></center>";
+            document.getElementById("chosencomp").style.backgroundColor = "red";
+            console.log(document.getElementById("chosencomp").innerHTML);
 
+            var btnArray = document.getElementsByClassName("handc");
+            for (x = 0; x < btnArray.length; x++) {
+                btnArray[x].setAttribute( "onClick", "javascript: end();" );
+            }
+
+            setTimeout(endOfGame, 2000);
+        }
+
+        function end() {
+            var howdy = true;
+        }
+
+        function endOfGame() {
             if (card1.checkgame()) {
                 console.log("checkgame true");
                 card1.deal_cards();
@@ -381,7 +447,33 @@
                     appearField(card1.field_list[x].rank, card1.field_list[x].suit);
                 }
                 document.getElementById('compscore').innerHTML = card1.computerscore;
+            }
+
+            document.getElementById("chosencomp").innerHTML = "";
+            document.getElementById("chosencomp").style.backgroundColor = "transparent";
+            console.log(document.getElementById("chosencomp").style.backgroundColor);
+            console.log(document.getElementById("chosencomp").innerHTML);
+            var btnArray = document.getElementsByClassName("handc");
+            for (x = 0; x < btnArray.length; x++) {
+                var theId = btnArray[x].id;
+                console.log(theId);
+                if (theId < 3) {
+                    var theRank = theId.charAt(0);
+                    var theSuit = theId.charAt(1);
                 }
+                else {
+                    var theRank = theId.charAt(0) + theId.charAt(1);
+                    var theSuit = theId.charAt(2);
+                }
+                var theFunction = "javascript: match(" + theRank + ", " + theSuit +  ");";
+                if (btnArray[x].id.length < 3) {
+                    btnArray[x].setAttribute( "onClick",  "javascript: match(this.id.charAt(0), this.id.charAt(1));");
+                }
+                else {
+                    btnArray[x].setAttribute( "onClick",  "javascript: match(this.id.substring(0,2), this.id.charAt(2));");
+                }
+                console.log(document.getElementById(theId).getAttribute("onclick"));
+            }
         }
 
     </script>

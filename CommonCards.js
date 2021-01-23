@@ -33,6 +33,7 @@ class Card {
 
 class CommonCards {
 
+
     constructor(num_of_decks) {
         this.num_of_decks = num_of_decks;
         this.list_cards = [];
@@ -42,6 +43,8 @@ class CommonCards {
         this.computer_score_list = [];
         this.user_score_list = [];
         this.game_over = false;
+        this.rotaterank = "";
+        this.rotatesuit = "";
     }
 
 
@@ -55,6 +58,8 @@ class CommonCards {
         this.humanscore = 0;
         this.computerscore = 0;
         this.jackID = "";
+        this.rotaterank = "";
+        this.rotatesuit = "";
         for (var x = 1; x < 14; x++) {
             var card = new Card(x, 'H');
             this.list_cards.push(card);
@@ -174,6 +179,7 @@ class CommonCards {
             var rank = idMax[0];
             var suit = idMax[1];
             this.play(idMax, rank, suit);
+            return idMax;
             console.log("1");
         }
         else if (this.field_list.length > 2 && this.jackHand()) {
@@ -182,19 +188,26 @@ class CommonCards {
             this.field_list = [];
             for (x = 0; x < this.computer_list.length; x++) {
                 if (this.computer_list[x].rank == "J") {
+                    var imgid = this.computer_list[x].rank + this.computer_list[x].suit;
                     this.computer_list.splice(x, 1);
-                    break;
+                    return imgid;
                 }
             }
             console.log("2");
         }
         else if (this.computerMatch()) {
+            var imgid = this.rotaterank + this.rotatesuit;
+            return imgid;
             console.log("3");
         }
         else {
             this.play();
+            var imgid = this.rotaterank + this.rotatesuit;
+            return imgid;
             console.log("3");
         }
+        var imgid = this.rotaterank + this.rotatesuit;
+        return imgid;
     }
 
 
@@ -227,6 +240,8 @@ class CommonCards {
             outerloop:
             for (x = 0; x < this.computer_list.length; x++) {
                 if (this.computer_list[x].rank != "J") {
+                    this.rotatesuit = this.computer_list[x].suit;
+                    this.rotaterank = this.computer_list[x].rank;
                     var card_to_play = this.computer_list[x];
                     this.field_list.push(card_to_play);
                     this.computer_list.splice(x,1);
@@ -237,6 +252,8 @@ class CommonCards {
         else {
             this.computerscore+=this.field_list.length;
             this.computerscore++;
+            this.rotatesuit = this.computer_list[0].suit;
+            this.rotaterank = this.computer_list[0].rank;
             this.field_list = [];
             this.computer_list.splice(0, 1);
         }
@@ -260,6 +277,8 @@ class CommonCards {
             for (var y = 0; y < this.field_list.length; y++) {
                 if (this.computer_list[x].rank.toString() == this.field_list[y].rank.toString()) {
                     this.computerscore+=2;
+                    this.rotaterank = this.computer_list[x].rank.toString();
+                    this.rotatesuit = this.computer_list[x].suit.toString();
                     this.computer_list.splice(x, 1);
                     this.field_list.splice(y, 1);
                     return true;
